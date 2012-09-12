@@ -1,0 +1,14 @@
+section.row-fluid
+	section.span3
+		- each menu,key in menus
+			div(id='accordian_#{key}')
+				div.accordion-group
+					div.accordion-heading
+						a.accordion-toggle.capitalize(href="#collapse_#{key}",data-parent="#accordion_#{key}",data-toggle="collapse")=key
+					div.accordion-body.in.collapse(style="height: auto; ", id='collapse_#{key}')
+						div.accordion-inner.no-padding
+							ul.cms-load
+								- console.log(menu);
+								each men in menu
+									li.capitalize(cms-name=men)=men
+	section#components.span9

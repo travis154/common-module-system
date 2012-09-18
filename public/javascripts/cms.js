@@ -51,7 +51,8 @@ var cms = {
 			image:'<input type="file" />',
 			file:'<input type="file" />',
 			string:'<input type="text" />',
-			string_thaana:'<textarea></textarea>'
+			string_thaana:'<textarea class="thaana thaana-textarea"></textarea>',
+			string_thaana_textbox:'<input class="thaana" type="text">'
 		}
 	},
 	fetch:function fetch(feature, callback){
@@ -67,7 +68,8 @@ var cms = {
 	},
 	addComponent:function addComponent(template, options, schema, data){
 		var html = cms.renderComponent(template, options, schema, data);
-		$(cms.settings.components).append(html[0].outerHTML);
+		console.log(html);
+		$(cms.settings.components).append(html);
 	},
 	addComponents:function addComponents(components,feature){
 		_.each(components.docs,function(e,i){
@@ -83,20 +85,28 @@ var cms = {
 		dom.attr('cms-name',label);
 		dom.attr('cms-type',type);
 		var extra = [];
-		if(data){
-			switch(type){
-				case "string":
-					dom.attr('value',data);
-					break;
-				case "string_thaana":
-					dom.html(data);
-					break;
-				case "image":
+		
+		switch(type){
+			case "string":
+				dom.attr('value',data);
+				break;
+			case "string_thaana":
+				dom.thaana();
+				dom.html(data);
+				break;
+			case "string_thaana_textbox":
+				dom.thaana();
+				dom.val(data);
+				break;
+			case "image":
+				if(data)
 					extra.push(jade.render('image-thumbs',{image:data}));
-					break;
-			}
+				break;
 		}
-		var html = '<div class="control-group"><label class="control-label">'+ label +'</label><div class="controls">'+ dom[0].outerHTML + extra.join('') +'</div></div>';
+		//var html = '<div class="control-group"><label class="control-label">'+ label +'</label><div class="controls">'+ dom[0].outerHTML + extra.join('') +'</div></div>';
+		var html = $('<div class="control-group"><label class="control-label">'+ label +'</label><div class="controls"></div></div>');
+		html.find('.controls').append(dom);
+		html.find('.controls').append(extra.join(''));
 		return html;
 	},
 	makeReady:function(name){
@@ -134,6 +144,9 @@ var cms = {
 				form.append(name, elem.val())
 				
 			if(type == "string_thaana")
+				form.append(name, elem.val())
+				
+			if(type == "string_thaana_textbox")
 				form.append(name, elem.val())
 			
 			if(type == 'image'){

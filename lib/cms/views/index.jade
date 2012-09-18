@@ -10,5 +10,6 @@ section.row-fluid
 							ul.cms-load
 								- console.log(menu);
 								each men in menu
-									li.capitalize(cms-name=men)=men
+									- var m = men.split("_")[1]									
+									li.capitalize(cms-name=men)=m
 	section#components.span9

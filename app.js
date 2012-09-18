@@ -35,7 +35,7 @@ cms.add('about_information',{
 });
 
 cms.add('news_dhivehi',{
-	title:{type:'string'},
+	title:{type:'string_thaana_textbox'},
 	photo:{type:'image', folder:__dirname, crop:{width:500,height:200}},
 	article:{type:'string_thaana'}
 });
@@ -71,41 +71,13 @@ app.get('/',function(req,res){
 		res.json(require('util').inspect(page, true, 5));
 	});
 }),
-/*
-app.get('/', function(req,res){
-	var homepage = new cms.cms();
-	homepage.add({
-		type:'slider',
-		id:'slider1',
-		class:['row', 'anotherclass'],
-		data:'{homepage.slidingimages}'
-	});
-	homepage.add({type:'hr'});
-	homepage.add({
-		type:'horizontal-box',
-		id:'information',
-		data:''
-	});
-	homepage.render(function(data){
-		res.render('index',{cms:data});
-	});
-	
-	
-	
-	
-	
-	
-	cms.render('./views/menu.cms',{heading:'Maldives'},function(err,data){
-		console.log(data);
-		res.render('index',{cms:data});
-	});
-});*/
+
 app.get('/',function(req,res){
 	
 });
 /*
 
 */
-app.listen(3000, function(){
+app.listen(3017, function(){
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 });
